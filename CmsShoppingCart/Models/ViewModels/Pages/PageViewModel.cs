@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using CmsShoppingCart.Models.Data;
 
 namespace CmsShoppingCart.Models.ViewModels.Pages
@@ -31,6 +32,7 @@ namespace CmsShoppingCart.Models.ViewModels.Pages
         public string Slug { get; set; }
         [Required]
         [StringLength(int.MaxValue, MinimumLength = 5)]
+        [AllowHtml]
         public string Body { get; set; }
         public int Sorting { get; set; }
         public bool HasSidebar { get; set; }
