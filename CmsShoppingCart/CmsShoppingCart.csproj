@@ -157,6 +157,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\CmsShoppingCart.mdf" />
+    <Content Include="App_Data\CmsShoppingCart.Models.Data.Db.mdf" />
+    <Content Include="App_Data\CmsShoppingCart.Models.Data.Db_log.ldf">
+      <DependentUpon>CmsShoppingCart.Models.Data.Db.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\CmsShoppingCart_log.ldf">
       <DependentUpon>CmsShoppingCart.mdf</DependentUpon>
     </Content>
@@ -168,6 +172,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Uploads\Products\1\Gallery\Thumbs\file_131973639749852570.jpeg" />
+    <Content Include="Images\Uploads\Products\1\Gallery\Thumbs\file_131973639749862586.jpeg" />
+    <Content Include="Images\Uploads\Products\1\Gallery\Thumbs\file_131973674813365199.jpeg" />
+    <Content Include="Images\Uploads\Products\1\Gallery\Thumbs\file_131973674813694283.jpeg" />
+    <Content Include="Images\Uploads\Products\1\Gallery\Thumbs\file_131973674817719527.jpeg" />
+    <Content Include="Images\Uploads\Products\1\Gallery\Thumbs\file_131973674818306357.jpeg" />
+    <Content Include="Images\Uploads\Products\1\orange1.jpg" />
+    <Content Include="Images\Uploads\Products\1\Thumbs\orange1.jpg" />
+    <Content Include="Images\Uploads\Products\2\grapefruit4.jpg" />
+    <Content Include="Images\Uploads\Products\2\Thumbs\grapefruit4.jpg" />
+    <Content Include="Images\Uploads\Products\3\apple2.jpg" />
+    <Content Include="Images\Uploads\Products\3\Thumbs\apple2.jpg" />
+    <Content Include="Images\Uploads\Products\4\orange3.jpg" />
+    <Content Include="Images\Uploads\Products\4\Thumbs\orange3.jpg" />
+    <Content Include="Images\Uploads\Products\5\red3.png" />
+    <Content Include="Images\Uploads\Products\5\Thumbs\red3.png" />
+    <Content Include="Images\Uploads\Products\6\grapefruit1.jpg" />
+    <Content Include="Images\Uploads\Products\6\Thumbs\grapefruit1.jpg" />
+    <Content Include="Images\Uploads\Products\7\apple4.jpg" />
+    <Content Include="Images\Uploads\Products\7\Gallery\Thumbs\file.jpeg" />
+    <Content Include="Images\Uploads\Products\7\Thumbs\apple4.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -193,6 +218,14 @@
     <Content Include="Areas\Admin\Views\Shop\AddProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Shop\Products.cshtml" />
     <Content Include="Areas\Admin\Views\Shop\EditProduct.cshtml" />
+    <Content Include="Images\Uploads\Products\1\Gallery\file" />
+    <Content Include="Images\Uploads\Products\1\Gallery\file_131973639749852570" />
+    <Content Include="Images\Uploads\Products\1\Gallery\file_131973639749862586" />
+    <Content Include="Images\Uploads\Products\1\Gallery\file_131973674813365199" />
+    <Content Include="Images\Uploads\Products\1\Gallery\file_131973674813694283" />
+    <Content Include="Images\Uploads\Products\1\Gallery\file_131973674817719527" />
+    <Content Include="Images\Uploads\Products\1\Gallery\file_131973674818306357" />
+    <Content Include="Images\Uploads\Products\7\Gallery\file" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor_source.js" />
     <Content Include="Scripts\ckeditor\config.js" />
@@ -572,6 +605,11 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="fileman\" />
+    <Folder Include="Images\Uploads\Products\2\Gallery\Thumbs\" />
+    <Folder Include="Images\Uploads\Products\3\Gallery\Thumbs\" />
+    <Folder Include="Images\Uploads\Products\4\Gallery\Thumbs\" />
+    <Folder Include="Images\Uploads\Products\5\Gallery\Thumbs\" />
+    <Folder Include="Images\Uploads\Products\6\Gallery\Thumbs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
