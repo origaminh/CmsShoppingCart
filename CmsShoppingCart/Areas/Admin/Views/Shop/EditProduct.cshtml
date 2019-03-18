@@ -87,3 +87,58 @@
     </div>
 }
 
+<hr/>
+
+@if (!Model.GalleryImages.Any())
+{
+    <h3>There are no gallery images for this product.</h3>
+}
+
+<form action="/admin/shop/SaveGalleryImages" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+    <div class="fallback">
+        <input type="file" name="file" multiple/>
+        <input type="submit" value="Upload"/>
+    </div>
+</form>
+
+<br/><br/>
+
+@foreach (var image in Model.GalleryImages)
+{
+    <div style="display: inline-block">
+        <img src="/Images/Uploads/Products/@Model.Id/Gallery/Thumbs/@image"/>
+        @Html.ActionLink("delete", "DeleteImage", "Shop", new { @class = "deleteimage", data_name = image })
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(function () {
+            // Preview Selected Image
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $("img#imgpreview")
+                            .attr("src", e.target.result)
+                            .width(200)
+                            .height(200);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+
+            }
+
+            $("#ImageUpload").change(function() {
+                readURL(this);
+            });
+            
+            // Dropzone js
+            
+
+
+        });
+    </script>
+}

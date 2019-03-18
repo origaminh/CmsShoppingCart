@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.Web.WebPages;
 using CmsShoppingCart.Models.Data;
 using CmsShoppingCart.Models.ViewModels.Shop;
 using PagedList;
@@ -347,9 +348,84 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             TempData["SM"] = "You have edited the product!";
             #region Image Upload
 
+            // check for file upload
+            if (file != null && file.ContentLength > 0)
+            {
+                // get extension
+                string ext = file.ContentType.ToLower();
+                // verify extension
+                if (ext != "image/jpg" &&
+                    ext != "image/jpeg" &&
+                    ext != "image/pjpeg" &&
+                    ext != "image/gif" &&
+                    ext != "image/x-png" &&
+                    ext != "image/png")
+                {
+                    using (Db db = new Db())
+                    {
+                        ModelState.AddModelError("", "The image was not uploaded - wrong image extension!");
+                        return View(model);
+                    }
+                }
+                // set upload directory paths
+                var originalDirectory = new DirectoryInfo(String.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+                var pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+                var pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Thumbs");
+
+                // delete files from directories
+                DirectoryInfo di1 = new DirectoryInfo(pathString1);
+                DirectoryInfo di2 = new DirectoryInfo(pathString2);
+
+                foreach (FileInfo file2 in di1.GetFiles())
+                    file2.Delete();
+
+                foreach (FileInfo file3 in di2.GetFiles())
+                    file3.Delete();
+                // save image name
+                string imageName = file.FileName;
+
+                using (Db db = new Db())
+                {
+                    ProductDTO dto = db.Products.Find(id);
+                    dto.ImageName = imageName;
+
+                    db.SaveChanges();
+                }
+                // save original and thumb images
+                var path = string.Format("{0}\\{1}", pathString1, imageName);
+                var path2 = string.Format("{0}\\{1}", pathString2, imageName);
+                // save original
+                file.SaveAs(path);
+                // create and save thumb
+                WebImage img = new WebImage(file.InputStream);
+                img.Resize(200, 200);
+                img.Save(path2);
+            }
+
+
             #endregion
 
             return RedirectToAction("EditProduct");
+        }
+
+        public ActionResult DeleteProduct(int id)
+        {
+            // delete product from db
+            using (Db db = new Db())
+            {
+                ProductDTO dto = db.Products.Find(id);
+                db.Products.Remove(dto);
+                db.SaveChanges();
+            }
+            // delete product folder
+            var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\Uploads", Server.MapPath(@"\")));
+
+            string pathString = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString());
+
+            if (Directory.Exists(pathString))
+                Directory.Delete(pathString, true);
+            // redirect
+            return RedirectToAction("Products");
         }
     }
 }
