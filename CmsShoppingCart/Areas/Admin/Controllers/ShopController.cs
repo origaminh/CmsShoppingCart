@@ -446,7 +446,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                     string pathString1 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery");
                     string pathString2 = Path.Combine(originalDirectory.ToString(), "Products\\" + id.ToString() + "\\Gallery\\Thumbs");
                     // set image paths
-                    var storedFileName = fileName + "_" + DateTime.Now.ToFileTime();
+                    var storedFileName = fileName + "_" + DateTime.Now.ToFileTime() + ".jpeg";
                     var path = string.Format("{0}\\{1}", pathString1, storedFileName);
                     var path2 = string.Format("{0}\\{1}", pathString2, storedFileName);
                     // save original and thumb
