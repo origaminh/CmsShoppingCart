@@ -31,7 +31,7 @@ namespace CmsShoppingCart.Controllers
 
             ViewBag.GrandTotal = total;
             // Return view with model
-            return View();
+            return View(cart);
         }
 
         public ActionResult CartPartial()
@@ -53,6 +53,9 @@ namespace CmsShoppingCart.Controllers
                     qty += item.Quantity;
                     price += item.Quantity * item.Price;
                 }
+
+                model.Quantity = qty;
+                model.Price = price;
             }
             else
             {
@@ -93,18 +96,92 @@ namespace CmsShoppingCart.Controllers
                 }
                 else
                 {
-                    
+                    productInCart.Quantity++;
                 }
             }
 
-
             // get total qty and price and add to model
+            int qty = 0;
+            decimal price = 0m;
+
+            foreach (var item in cart)
+            {
+                qty += item.Quantity;
+                price += item.Quantity*item.Price;
+            }
+            model.Quantity = qty;
+            model.Price = price;
 
             // save cart back to session
+            Session["cart"] = cart;
 
             // return partial view with model
+            return PartialView(model);
+        }
 
-            return View();
+        public JsonResult IncrementProduct(int productId)
+        {
+            // init cart list
+            List<CartViewModel> cart = Session["cart"] as List<CartViewModel>;
+
+            using (Db db = new Db())
+            {
+                // get the specific cartVM from list
+                CartViewModel model = cart.FirstOrDefault(x => x.ProductId == productId);
+
+                // increment qty
+                model.Quantity++;
+
+                // store needed data
+                var result = new {qty = model.Quantity, price = model.Price};
+
+                // return json with data    
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public ActionResult DecrementProduct(int productId)
+        {
+            // init cart
+            List<CartViewModel> cart = Session["cart"] as List<CartViewModel>;
+
+            using (Db db = new Db())
+            {
+                // get the specific cartVM from list
+                CartViewModel model = cart.FirstOrDefault(x => x.ProductId == productId);
+
+                // decrement qty
+                if (model.Quantity > 1)
+                {
+                    model.Quantity--;
+                }
+                else
+                {
+                    model.Quantity = 0;
+                    cart.Remove(model);
+                }
+                // store needed data
+                var result = new { qty = model.Quantity, price = model.Price };
+
+                // return json
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public void RemoveProduct(int productId)
+        {
+            // init the cart
+            List<CartViewModel> cart = Session["cart"] as List<CartViewModel>;
+            // get model from list
+            using (Db db = new Db())
+            {
+                // get the specific cartVM from list
+                CartViewModel model = cart.FirstOrDefault(x => x.ProductId == productId);
+
+                // remove model from list
+                cart.Remove(model);
+            }
         }
     }
 }
