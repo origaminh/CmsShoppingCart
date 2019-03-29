@@ -7,12 +7,14 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Web.WebPages;
+using CmsShoppingCart.Areas.Admin.Models.ViewModels.Shop;
 using CmsShoppingCart.Models.Data;
 using CmsShoppingCart.Models.ViewModels.Shop;
 using PagedList;
 
 namespace CmsShoppingCart.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ShopController : Controller
     {
         // GET: Admin/Shop
@@ -469,6 +471,63 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
 
             if (System.IO.File.Exists(fullPath2))
                 System.IO.File.Delete(fullPath2);
+        }
+
+        public ActionResult Orders()
+        {
+            // initialize list of OrdersForAdminVM
+            List<OrdersForAdminViewModel> ordersForAdmin = new List<OrdersForAdminViewModel>();
+
+            using (Db db = new Db())
+            {
+                // init list of ordersVM
+                List<OrderViewModel> orders = db.Orders.ToArray().Select(x => new OrderViewModel(x)).ToList();
+
+                // loop through list of ordersVM
+                foreach (var order in orders)
+                {
+                    // init product dictionary
+                    Dictionary<string, int> productsAndQty = new Dictionary<string, int>();
+
+                    // declare total
+                    decimal total = 0m;
+
+                    // init list of OrderDetailsDTO
+                    List<OrderDetailsDTO> orderDetailsList =
+                        db.OrderDetails.Where(x => x.OrderId == order.OrderId).ToList();
+                    // get username
+                    UserDTO user = db.Users.FirstOrDefault(x => x.Id == order.UserId);
+                    string username = user.Username;
+
+                    // loop through list of orderdetailsDTO
+                    foreach (var orderDetail in orderDetailsList)
+                    {
+                        // get product
+                        ProductDTO product = db.Products.FirstOrDefault(x => x.Id == orderDetail.ProductId);
+                        // get product price, name
+                        decimal price = product.Price;
+                        string productName = product.Name;
+
+                        // add to product dictionary
+                        productsAndQty.Add(productName, orderDetail.Quantity);
+
+                        // get total
+                        total += orderDetail.Quantity*price;
+                    }
+                    // Add to prderForAdminVM list
+                    ordersForAdmin.Add(new OrdersForAdminViewModel
+                    {
+                        OrderNumber = order.OrderId,
+                        Username = username,
+                        Total = total,
+                        ProductsAndQty = productsAndQty,
+                        CreatedAt = order.CreatedAt
+                    });
+                }
+            }
+
+            // return view with ordersForAdmin list 
+            return View(ordersForAdmin);
         }
     }
 }

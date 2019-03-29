@@ -183,5 +183,64 @@ namespace CmsShoppingCart.Controllers
                 cart.Remove(model);
             }
         }
+
+        public ActionResult PaypalPartial()
+        {
+            // init the cart
+            List<CartViewModel> cart = Session["cart"] as List<CartViewModel>;
+
+            return PartialView(cart);
+        }
+
+        [HttpPost]
+        public void PlaceOrder()
+        {
+            // get cart list
+            List<CartViewModel> cart = Session["cart"] as List<CartViewModel>;
+            // get username
+            string username = User.Identity.Name;
+            int orderId = 0;
+
+            using (Db db = new Db())
+            {
+                // init OrderDTO
+                OrderDTO orderDTO = new OrderDTO();
+
+                // get user id
+                var q = db.Users.FirstOrDefault(x => x.Username == username);
+                int userId = q.Id;
+
+                // Add to OrderDTO and save
+                orderDTO.UserId = userId;
+                orderDTO.CreatedAt = DateTime.Now;
+
+                db.Orders.Add(orderDTO);
+                db.SaveChanges();
+
+                // get inserted id
+                orderId = orderDTO.OrderId;
+
+                // init OrderDetailsDTO
+                OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
+
+                // Add to OrderDetailsDTO
+                foreach (var item in cart)
+                {
+                    orderDetailsDTO.OrderId = orderId;
+                    orderDetailsDTO.UserId = userId;
+                    orderDetailsDTO.ProductId = item.ProductId;
+                    orderDetailsDTO.Quantity = item.Quantity;
+
+                    db.OrderDetails.Add(orderDetailsDTO);
+                    db.SaveChanges();
+                }
+            }
+
+
+            // Email admin
+
+            // Reset session
+            Session["cart"] = null;
+        }
     }
 }

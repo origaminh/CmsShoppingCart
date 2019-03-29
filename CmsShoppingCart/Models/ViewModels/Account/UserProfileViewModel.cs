@@ -7,18 +7,19 @@ using CmsShoppingCart.Models.Data;
 
 namespace CmsShoppingCart.Models.ViewModels.Account
 {
-    public class UserViewModel
+    public class UserProfileViewModel
     {
-        public UserViewModel()
+        public UserProfileViewModel()
         {
-            
+
         }
 
-        public UserViewModel(UserDTO row)
+        public UserProfileViewModel(UserDTO row)
         {
             Id = row.Id;
             FirstName = row.FirstName;
             LastName = row.LastName;
+            EmailAddress = row.EmailAddress;
             Username = row.Username;
             Password = row.Password;
         }
@@ -33,9 +34,7 @@ namespace CmsShoppingCart.Models.ViewModels.Account
         public string EmailAddress { get; set; }
         [Required]
         public string Username { get; set; }
-        [Required]
         public string Password { get; set; }
-        [Required]
         public string ConfirmPassword { get; set; }
     }
 }

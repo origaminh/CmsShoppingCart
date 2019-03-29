@@ -140,6 +140,8 @@
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShopController.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\Shop\OrdersForAdminViewModel.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
@@ -149,17 +151,24 @@
     </Compile>
     <Compile Include="Models\Data\CategoryDTO.cs" />
     <Compile Include="Models\Data\Db.cs" />
+    <Compile Include="Models\Data\OrderDetailsDTO.cs" />
+    <Compile Include="Models\Data\OrderDTO.cs" />
     <Compile Include="Models\Data\PageDTO.cs" />
     <Compile Include="Models\Data\ProductDTO.cs" />
     <Compile Include="Models\Data\RoleDTO.cs" />
     <Compile Include="Models\Data\SidebarDTO.cs" />
     <Compile Include="Models\Data\UserDTO.cs" />
     <Compile Include="Models\Data\UserRoleDTO.cs" />
+    <Compile Include="Models\ViewModels\Account\LoginUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\Account\OrdersForUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\Account\UserNavPartialViewModel.cs" />
+    <Compile Include="Models\ViewModels\Account\UserProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\Account\UserViewModel.cs" />
     <Compile Include="Models\ViewModels\Cart\CartViewModel.cs" />
     <Compile Include="Models\ViewModels\Pages\PageViewModel.cs" />
     <Compile Include="Models\ViewModels\Pages\SidebarViewModel.cs" />
     <Compile Include="Models\ViewModels\Shop\CategoryViewModel.cs" />
+    <Compile Include="Models\ViewModels\Shop\OrderViewModel.cs" />
     <Compile Include="Models\ViewModels\Shop\ProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -244,6 +253,8 @@
     <Content Include="Images\Uploads\Products\1\Gallery\file_131973674817719527" />
     <Content Include="Images\Uploads\Products\1\Gallery\file_131973674818306357" />
     <Content Include="Images\Uploads\Products\7\Gallery\file" />
+    <Content Include="Areas\Admin\Views\Shop\Orders.cshtml" />
+    <Content Include="App_Data\App_Data.rar" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\ckeditor_source.js" />
     <Content Include="Scripts\ckeditor\config.js" />
@@ -634,9 +645,14 @@
     <Content Include="Views\Cart\CartPartial.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\AddToCartPartial.cshtml" />
+    <Content Include="Views\Account\CreateAccount.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\UserNavPartial.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Cart\PaypalPartial.cshtml" />
+    <Content Include="Views\Account\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="fileman\" />
     <Folder Include="Images\Uploads\Products\2\Gallery\Thumbs\" />
     <Folder Include="Images\Uploads\Products\3\Gallery\Thumbs\" />
